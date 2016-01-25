@@ -24,6 +24,7 @@ ASSET_MANAGER.queueDownload("img/knight atk flipped.png");
 ASSET_MANAGER.queueDownload("img/knight jump flipped temp.png");
 ASSET_MANAGER.queueDownload("img/knight run flipped.png");
 ASSET_MANAGER.queueDownload("img/knight standing flipped.png");
+ASSET_MANAGER.queueDownload("img/testrun.png");
 
 /*
 Download all the elements and add entities to the game.
@@ -138,13 +139,13 @@ Initializes the Knight and loads his assets.
 function Knight(game) {
     this.game = game;
     //y pos of the ground
-    this.ground = 600 - (54 * 2);
+    this.ground = 600 - (59 * 2);
     //y pos of the ceiling
     //this.ceiling = 110;
 
     //the Knight's starting position
     this.currentX = 0;
-    this.currentY = 600 - (54 * 2);
+    this.currentY = 600 - (59 * 2);
 
     //setting up gamestate bools
     this.removeFromWorld = false;
@@ -160,9 +161,9 @@ function Knight(game) {
     this.jumping = new Animation(ASSET_MANAGER.getAsset("img/knight jump temp.png"),
         0, 0, ASSET_MANAGER.getAsset("img/knight jump flipped temp.png"),
         0, 0, 52, 61, 1, 1, false, false);
-    this.running = new Animation(ASSET_MANAGER.getAsset("img/knight run.png"),
-        0, 0, ASSET_MANAGER.getAsset("img/knight run flipped.png"),
-        0, 0, 55, 54, 4, 0.1, false, true);
+    this.running = new Animation(ASSET_MANAGER.getAsset("img/testrun.png"),
+        0, 0, ASSET_MANAGER.getAsset("img/testrun.png"),
+        0, 0, 54, 59, 8, 0.1, false, true);
 }
 
 /*
