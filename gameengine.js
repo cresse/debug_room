@@ -14,6 +14,7 @@ window.requestAnimFrame = (function () {
 KEY_CODES = {
     65: 'a',
     68: 'd',
+    83: 's',
     87: 'w'
 }
 

@@ -25,6 +25,7 @@ ASSET_MANAGER.queueDownload("img/knight jump flipped temp.png");
 ASSET_MANAGER.queueDownload("img/knight run flipped.png");
 ASSET_MANAGER.queueDownload("img/knight standing flipped.png");
 ASSET_MANAGER.queueDownload("img/testrun.png");
+ASSET_MANAGER.queueDownload("img/knight attack skeleton.png");
 
 /*
 Download all the elements and add entities to the game.
@@ -152,7 +153,7 @@ function Knight(game) {
     this.isStanding = true;
     this.isRunning = false;
     this.isJumping = false;
-    this.isFalling = false;
+    this.isAttacking = false;
 
     //store animations from sheets
     this.standing = new Animation(ASSET_MANAGER.getAsset("img/knight standing.png"),
@@ -164,6 +165,9 @@ function Knight(game) {
     this.running = new Animation(ASSET_MANAGER.getAsset("img/testrun.png"),
         0, 0, ASSET_MANAGER.getAsset("img/testrun.png"),
         0, 0, 54, 59, 8, 0.1, false, true);
+    this.attacking = new Animation(ASSET_MANAGER.getAsset("img/knight attack skeleton.png"),
+        0, 0, ASSET_MANAGER.getAsset("img/knight attack skeleton.png"),
+        0, 0, 101, 72, 12, 0.1, false, true);
 }
 
 /*
@@ -183,6 +187,9 @@ Knight.prototype = {
             //this.standing.elapsedTime += this.game.clockTick;
             this.running.elapsedTime += this.game.clockTick;
         } else {
+            if (this.isAttacking) {
+                this.attacking.elapsedTime += this.game.clockTick;
+            }
             if (!this.isJumping) {
                 this.isStanding = true;
             }
@@ -195,22 +202,34 @@ Knight.prototype = {
             this.standing.flipped = false;
             this.jumping.flipped = false;
             this.running.flipped = false;
+            this.attacking.flipped = false;
             this.isRunning = true;
             this.isStanding = false;
+            this.isAttacking = false;
             this.currentX += 7;
         } else if (this.game.keyStatus['a']) {
             this.standing.flipped = true;
             this.jumping.flipped = true;
             this.running.flipped = true;
+            this.attacking.flipped = false;
             this.isRunning = true;
             this.isStanding = false;
+            this.isAttacking = false;
             this.currentX -= 7;
         }
 
         if (this.game.keyStatus['w']) {
             //console.log("w hit");
             this.isJumping = true;
+            this.isAttacking = false;
             this.isStanding = false;
+        }
+
+        if (this.game.keyStatus['s']) {
+            this.isAttacking = true;
+            this.isStanding = false;
+            this.isJumping = false;
+            this.isRunning = false;
         }
 
         //establish jump arc
@@ -243,6 +262,8 @@ Knight.prototype = {
     draw: function () {
         if (this.isStanding) {
             this.standing.drawFrame(this.game.ctx, this.currentX, this.currentY);
+        } else if (this.isAttacking) {
+            this.attacking.drawFrame(this.game.ctx, this.currentX, this.currentY);
         } else if (this.isJumping) {
             this.jumping.drawFrame(this.game.ctx, this.currentX, this.currentY);
         } else if (this.isRunning) {
