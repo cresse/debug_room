@@ -186,6 +186,7 @@ Knight.prototype = {
         if (this.game.keysDown) {
             //this.standing.elapsedTime += this.game.clockTick;
             this.running.elapsedTime += this.game.clockTick;
+            this.attacking.elapsedTime += this.game.clockTick;
         } else {
             if (this.isAttacking) {
                 this.attacking.elapsedTime += this.game.clockTick;
